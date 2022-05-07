@@ -1,23 +1,24 @@
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
 
-const authenticate = (req, res, next) => {
+const authorization = (req, res, next) => {
   try {
-    const token = req.header("Authorization").replace('Bearer ', '');
+    const token = req.cookies.access_token;
     if (!token) {
       res.status(403).send("A token is required for authentication");
     }
-      const verified = jwt.verify(token, process.env.SECRET_KEY);
-      if(verified){
-        // res.send("Successfully Verified");
-        next();
-      }else{
-          // Access Denied
-          res.status(401).send(error);
-      }
-  } catch (err) {
-    res.status(401).send("Invalid Token");
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    if(data){
+      next();
+    }else{
+        // Access Denied
+        res.status(401).send(error);
+    }
+    // req.userId = data.user_id;
+    // req.userEmail = data.email;
+  } catch {
+    res.status(403).send("Token Expired");
   }
 };
 
-module.exports = authenticate;
+module.exports = authorization;
