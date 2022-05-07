@@ -3,7 +3,10 @@ const router = express.Router();
 const authorization = require("../middleware/auth");
 const controller = require('../controller/auth.controller');
 
-router.get('/', authorization, (req, res) => {
+router.get('/', (req, res) => {
+  res.send("Welcome to Forage!!");
+});
+router.get('/dashboard', authorization, (req, res) => {
   res.send("Welcome to Forage!!");
 });
 
