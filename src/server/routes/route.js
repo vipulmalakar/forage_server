@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const authenticate = require("../middleware/auth");
+const authorization = require("../middleware/auth");
 const controller = require('../controller/auth.controller');
 
-router.get('/', authenticate, (req, res) => {
-    res.send("hello users!! welcome to creatify");
+router.get('/', authorization, (req, res) => {
+  res.send("Welcome to Forage!!");
 });
 
 // signUp route

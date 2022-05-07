@@ -21,20 +21,21 @@ exports.signin = async (req, res) => {
         const user = await User.findOne({ email });
         
         if (user && (await bcrypt.compare(password, user.password))) {
-        // Create token
-        const token = jwt.sign(
-            { user_id: user._id.toString(), email },
-            "hello",
-            {
-            expiresIn: "1m",
-            }
-        );
-
-        // save user token
-        user.token = token;
-        await user.save();
-        // user
-        res.status(200).json(user);
+          // Create token
+          const token = jwt.sign(
+              { user_id: user._id.toString(), email },
+              "hello",
+              {
+              expiresIn: "1h",
+              }
+          );
+          res
+            .cookie("access_token", token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === "production",
+            })
+            .status(200)
+            .json({ message: "Logged in successfully 😊 👌" });
         }else{
           res.status(400).send("Invalid Credentials");
         }
@@ -79,11 +80,14 @@ exports.userSignup = async (req, res) => {
           expiresIn: "1h",
         }
       );
-      // save user token
-      user.token = token;
-      await user.save();
-      // return new user
-      res.status(201).json(user);
+
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+        })
+        .status(200)
+        .json({ message: "Signup successfully 😊 👌" });
     
   } catch (err) {
     console.log(err);
@@ -125,10 +129,13 @@ exports.ngoSignup = async (req, res) => {
         expiresIn: "1h",
       }
     );
-    // save ngo token
-    ngo.token = token;
-    // return new ngo
-    res.status(201).json(ngo);
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      })
+      .status(200)
+      .json({ message: "Signup successfully 😊 👌" });
   }catch (err) {
     console.log(err);
   }
@@ -136,7 +143,8 @@ exports.ngoSignup = async (req, res) => {
 
 
 exports.logout = (req, res) => {
-    console.log(`Logout page`);
-    res.clearCookie('jwtoken', {path : '/'});
-    res.status(200).send('User LogOut');
+  return res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ message: "Successfully logged out 😏 🍀" });
 }
