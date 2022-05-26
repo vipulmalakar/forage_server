@@ -19,5 +19,5 @@ app.use(require ("./src/server/routes/route"));
 // const port = process.env.API_PORT;
 
 app.listen(process.env.PORT || 4000, function(){
-  console.log(`Server running on port ${port}`);
+  console.log(`Server running on port`);
 });
