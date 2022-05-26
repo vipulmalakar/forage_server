@@ -1,37 +1,27 @@
 {
-  "name": "jwt-project",
+  "name": "forage_server",
   "version": "1.0.0",
-  "description": "A demo about authentication using jwt",
-  "main": "index.js",
+  "description": "This is a node server for forage application",
+  "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Olanetsoft/jwt-project.git"
+    "url": "git+https://github.com/vipulmalakar/forage_server.git"
   },
-  "keywords": [
-    "jwt",
-    "node",
-    "authentication"
-  ],
-  "author": "Idris Olubisi",
+  "author": "Vipul Malakar",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Olanetsoft/jwt-project/issues"
+    "url": "https://github.com/vipulmalakar/forage_server/issues"
   },
-  "homepage": "https://github.com/Olanetsoft/jwt-project#readme",
+  "homepage": "https://github.com/vipulmalakar/forage_server#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.14"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.16"
+    "mongoose": "^6.3.4"
   }
 }
