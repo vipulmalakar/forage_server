@@ -5,7 +5,8 @@ const ngoSchema = new mongoose.Schema({
   contact: { type: Number, unique: true },
   email: { type: String, unique: true },
   password: { type: String },
-  token: { type: String },
+  role:{ type: String, default: null },
+  token: { type: String }
 });
 
 module.exports = new mongoose.model("Ngo", ngoSchema);
