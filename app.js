@@ -16,8 +16,8 @@ app.use(cookieParser());
 // routing files
 app.use(require ("./src/server/routes/route"));
 
-const port = process.env.API_PORT;
+// const port = process.env.API_PORT;
 
-app.listen(process.env.PORT || port, function(){
-  console.log(`Server running on port ${port}`);
+app.listen(process.env.PORT || 4000, function(){
+  console.log(`Server running on port`);
 });

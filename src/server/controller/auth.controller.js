@@ -23,7 +23,7 @@ exports.signin = async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
           // Create token
           const token = jwt.sign(
-              { user_id: user._id.toString(), email },
+              { user_id: user._id.toString(), email, role:user.role },
               process.env.SECRET_KEY,
               {
               expiresIn: "1h",
@@ -70,11 +70,12 @@ exports.userSignup = async (req, res) => {
         last_name,
         contact: contact,
         email: email.toLowerCase(), // sanitize: convert email to lowercase
-        password: encryptedPassword
+        password: encryptedPassword,
+        role:"user"
       });
       // Create token
       const token = jwt.sign(
-        { user_id: user._id, email },
+        { user_id: user._id, email, role:user.role },
         process.env.SECRET_KEY,
         {
           expiresIn: "1h",
@@ -120,10 +121,11 @@ exports.ngoSignup = async (req, res) => {
       contact: contact,
       email: email.toLowerCase(), // sanitize: convert email to lowercase
       password: hash,
+      role:"user"
     });
     // Create token
     const token = jwt.sign(
-      { user_id: ngo._id, email },
+      { user_id: ngo._id, email, role:ngo.role },
       process.env.SECRET_KEY,
       {
         expiresIn: "1h",
@@ -139,6 +141,18 @@ exports.ngoSignup = async (req, res) => {
   }catch (err) {
     console.log(err);
   }
+}
+
+exports.updateUser = (req,res) => {
+  const data = jwt.verify(req.cookies.access_token, process.env.SECRET_KEY);
+  const { first_name, last_name, contact, email } = req.body;
+  User.findByIdAndUpdate({_id:data.user_id}, {first_name, last_name, contact, email}, {new:true}, (err, result) => {
+    if(err){
+      res.status(500).send(err);
+    }else{
+      res.status(200).send(result);
+    }
+  })
 }
 
 

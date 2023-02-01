@@ -15,8 +15,6 @@ const authorization = (req, res, next) => {
         // Access Denied
         res.status(401).send("A token is required for authentication");
       }
-      // req.userId = data.user_id;
-      // req.userEmail = data.email;
     }
   } catch {
     res.status(403).send("Token Expired");
